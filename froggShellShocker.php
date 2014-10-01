@@ -16,7 +16,7 @@
 //  * Check ShellShock Vulnerability    *
 //  * Powered by: Frogg                 *
 //  * Email     : admin@frogg.fr        *
-//  * Warning   : Do Not Feed The Froggs*
+//  * Warning   : Do Not Feed The Frogg *
 //  *************************************
 
 //ShellShock Article description
