@@ -368,7 +368,13 @@ Password: whatever
  
 $ ls -l /tmp/pwnd
 -rw-------  1 root  wheel  0 Sep 27 15:28 /tmp/pwnd
+
+
++ add all from
+https://github.com/mubix/shellshocker-pocs
+
 */
+
 
 /*----------------------------------------*/
 ?>
