@@ -16,6 +16,10 @@ you can set:
 The code will try to write file in /tmp/exploit/ (default folder who need to be created) using the Shell Shock Exploit.
 If the script create thoose file, that mean your server is Vulnerable to the exploit...
 
-all is describe in detail in the source code...
+To create the folder you can use the shell command: mkdir -p /tmp/exploit && chown www-data:www-data /tmp/exploit && chmod 777 /tmp/exploit
 
-if you got any question feel free to seend me message/mail
+Once done with the script you can safely remove this temp folder.
+
+All is describe in detail in the source code...
+
+If you got any question feel free to seend me message/mail
