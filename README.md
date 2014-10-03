@@ -22,4 +22,4 @@ Once done with the script you can safely remove this temp folder.
 
 All is describe in detail in the source code...
 
-If you got any question feel free to seend me message/mail
+If you got any question feel free to send me a message/mail
