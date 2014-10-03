@@ -5,9 +5,9 @@ Test Shell Shock Exploit on a linux server using php
 
 i will add more description later
 
-this script test the 4 exploits of Shell Shock on a Linux server with php 5+
+this script test the 4 exploits of Shell Shock on any Linux server with php 5+
 
-all the configuration is actually in the main code in configuration part, you can set:
+all the configuration is actually in the main code in the configuration part, you can set:
 - server server ip (+cgi page if needed)
 - folder where exploit will write (or none but can be the mess, for better test need to add rights)
 - and some more options (like the exploit file name and ext to be easily retrieved)
