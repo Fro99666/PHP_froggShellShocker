@@ -1,5 +1,5 @@
-froggShellShocker
-=================
+Shell Shock Tester
+==================
 
 Test Shell Shock Exploit on a linux server using php
 
